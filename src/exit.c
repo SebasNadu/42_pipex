@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 15:39:31 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/05 15:30:56 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/09/06 15:12:14 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,6 @@ void	*pipex_exit(t_pipex *pipex, char *param, int err)
 	if (pipex->is_urandom)
 		unlink(URANDOM_PATH);
 	free(pipex);
-	exit(0);
+	exit(EXIT_FAILURE);
 	return (0);
 }

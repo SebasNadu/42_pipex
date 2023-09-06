@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:24:25 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/05 12:37:31 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/09/05 18:30:57 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 #include <unistd.h>
 #include <fcntl.h>
+#include <sys/types.h>
 
 
 # define HERE_DOC_PATH ".pipex_here_doc"
@@ -55,7 +56,17 @@ typedef struct s_pipex
 	int		cmd_count;
 }				t_pipex;
 
+// exit.c
 void	*pipex_exit(t_pipex *pipex, char *param, int err);
 void	free_array(char **array, int size);
+// parse.c
+t_bool	parse_args(int argc, char **argv, t_pipex *pipex);
+t_bool	parse_cmd_paths(t_pipex *pipex, int argc, char **argv, char **envp);
+t_bool	parse_cmd_args(t_pipex *pipex, int argc, char **argv);
+// get_io.c
+t_bool	get_infile(t_pipex *pipex, char **argv);
+t_bool	get_outfile(t_pipex *pipex, char **argv, int argc);
+// get_paths.c
+char	*find_cmd_path(char *cmd, char **envp);
 
 #endif
