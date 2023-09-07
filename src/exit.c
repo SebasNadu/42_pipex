@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 15:39:31 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/06 15:12:14 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/09/07 20:17:02 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,10 @@ void	pipex_perror(char *param, int err)
 		ft_putstr_fd("could not create the child process: ", STDERR_FILENO);
 	else if (err == NO_PATH)
 		ft_putstr_fd("PATH variable is not set ", STDERR_FILENO);
-	else
-		ft_putstr_fd("unknown error: ", STDERR_FILENO);
-	if (param && (err == CMD_NOT_FOUND || err == NO_FILE || err == NO_AUTH ||
-		err == CMD_FAIL))
+	if (param && (err == CMD_NOT_FOUND || err == NO_FILE || err == NO_AUTH
+			|| err == CMD_FAIL))
 		ft_putstr_fd(param, STDERR_FILENO);
 	ft_putstr_fd("\n", STDERR_FILENO);
-
 }
 
 void	free_array(char **array, int size)
@@ -78,9 +75,9 @@ void	*pipex_exit(t_pipex *pipex, char *param, int err)
 {
 	if (err < 1 || param)
 		pipex_perror(param, err);
-	if (pipex->fd_in != -1)
+	if (pipex->fd_in != -2)
 		close(pipex->fd_in);
-	if (pipex->fd_out != -1)
+	if (pipex->fd_out != -2)
 		close(pipex->fd_out);
 	if (pipex->cmd_paths != NULL)
 		free_array(pipex->cmd_paths, pipex->cmd_count);
@@ -91,6 +88,9 @@ void	*pipex_exit(t_pipex *pipex, char *param, int err)
 	if (pipex->is_urandom)
 		unlink(URANDOM_PATH);
 	free(pipex);
-	exit(EXIT_FAILURE);
+	if (err == NO_ERR || err == END)
+		exit(EXIT_SUCCESS);
+	else
+		exit(EXIT_FAILURE);
 	return (0);
 }

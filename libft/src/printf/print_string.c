@@ -6,7 +6,7 @@
 /*   By: johnavar <johnavar@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 16:17:32 by johnavar          #+#    #+#             */
-/*   Updated: 2023/07/04 18:13:42 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/09/07 19:22:40 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	ft_print_str(const char *str, t_print *flags)
 	return (count);
 }
 
-#if defined(__linux__) || defined(__gnu_linux__)
+#ifdef __linux__
 
 int	ft_print_string(char *str, t_print *flags)
 {

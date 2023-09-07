@@ -6,7 +6,7 @@
 #    By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/25 11:34:58 by sebasnadu         #+#    #+#              #
-#    Updated: 2023/09/05 12:11:10 by sebasnadu        ###   ########.fr        #
+#    Updated: 2023/09/06 15:24:01 by sebasnadu        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,8 +29,9 @@ LIBFT_FLAGS = -L $(LIBFT_DIR) -lft
 
 INCLUDES = -I ./includes -I $(LIBFT_DIR)/includes/
 CC = cc
-# CFLAGS = -Wall -Wextra -Werror
+# CFLAGS = -Wall -Wextra -Werror -MD
 CFLAGS		= -Wall -Wextra -Werror -g3 -fsanitize=address
+LEAKS		= valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes --track-origins=yes -s -q
 RM = rm -f
 PRINTF = printf
 

@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:09:49 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/05 16:22:07 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/09/07 20:06:42 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,6 @@ t_bool	parse_args(int argc, char **argv, t_pipex *pipex)
 		pipex->is_urandom = true;
 	if (argc < 5 + (int)pipex->here_doc)
 		return (*(int *)pipex_exit(NULL, NULL, INV_ARGS));
-	if (!pipex->here_doc && access(argv[1], F_OK) == -1)
-		return (*(int *)pipex_exit(NULL, argv[1], NO_FILE));
-	if (!pipex->here_doc && access(argv[1], R_OK) == -1)
-		return (*(int *)pipex_exit(NULL, argv[1], NO_AUTH));
 	if (get_infile(pipex, argv) == false)
 		return (*(int *)pipex_exit(pipex, argv[1], NO_FILE));
 	if (get_outfile(pipex, argv, argc) == false)

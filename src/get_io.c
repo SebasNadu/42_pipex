@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:16:03 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/05 16:24:22 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/09/07 20:17:14 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 t_bool	get_outfile(t_pipex *pipex, char **argv, int argc)
 {
 	if (pipex->here_doc)
-		pipex->fd_out = open(argv[argc - 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
+		pipex->fd_out = open(argv[argc - 1], O_WRONLY | O_CREAT
+				| O_APPEND, 0644);
 	else
-		pipex->fd_out = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		pipex->fd_out = open(argv[argc - 1], O_WRONLY | O_CREAT
+				| O_TRUNC, 0644);
 	if (pipex->fd_out < 0)
 		return (false);
 	return (true);

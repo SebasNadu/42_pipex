@@ -6,7 +6,7 @@
 /*   By: johnavar <johnavar@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 16:04:52 by johnavar          #+#    #+#             */
-/*   Updated: 2023/07/04 18:14:10 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/09/07 19:18:21 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@
 # include <stdio.h>
 # include "./libft.h"
 
-# if defined (__linux__)
+# ifdef __linux__
 #  define NNULL "(nil)"
-# elif defined (__APPLE__)
+# endif
+# ifdef __APPLE__
 #  define NNULL "0x0"
 # endif
 

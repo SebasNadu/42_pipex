@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:24:25 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/05 18:30:57 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/09/07 20:17:24 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,16 @@
 # include "../libft/includes/libft.h"
 # include "../libft/includes/ft_printf.h"
 
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/types.h>
-
+# include <unistd.h>
+# include <fcntl.h>
+# include <sys/types.h>
 
 # define HERE_DOC_PATH ".pipex_here_doc"
 # define URANDOM_PATH ".pipex_urandom"
 
 enum e_pipex_err
 {
+	NO_ERR = 2,
 	END = 1,
 	CMD_NOT_FOUND = 0,
 	NO_FILE = -1,
@@ -68,5 +68,8 @@ t_bool	get_infile(t_pipex *pipex, char **argv);
 t_bool	get_outfile(t_pipex *pipex, char **argv, int argc);
 // get_paths.c
 char	*find_cmd_path(char *cmd, char **envp);
+// pipex.c
+int		exec_pipex(t_pipex *pipex, char **envp, int i);
+void	init_pipex(t_pipex *pipex);
 
 #endif

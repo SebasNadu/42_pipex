@@ -6,7 +6,7 @@
 /*   By: johnavar <johnavar@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 16:01:25 by johnavar          #+#    #+#             */
-/*   Updated: 2023/07/04 18:10:48 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/09/07 19:22:04 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	ft_parse_flags(const char *format, int i, va_list *ap, t_print *flags)
 	return (i);
 }
 
-#if defined(__linux__) || defined(__gnu_linux__)
+#ifdef __linux__
 
 int	ft_parse_format(const char *format, va_list *ap)
 {
