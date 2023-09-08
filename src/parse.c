@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 09:31:38 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/08 10:47:46 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/09/08 19:39:50 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_bool	parse_cmd_args(t_pipex *pipex, int argc, char **argv)
 	i = 1;
 	while (++i < argc - 1)
 	{
-		cmd = ft_split(argv[i], ' ');
+		cmd = split_with_quotes(argv[i], ' ');
 		if (!cmd)
 			return (false);
 		pipex->cmd_args[i - 2] = cmd;
@@ -42,7 +42,7 @@ t_bool	parse_cmd_paths(t_pipex *pipex, int argc, char **argv, char **envp)
 	i = 1;
 	while (++i < argc -1)
 	{
-		cmd = ft_split(argv[i], ' ');
+		cmd = split_with_quotes(argv[i], ' ');
 		if (!cmd)
 			return (false);
 		pipex->cmd_paths[i - 2] = find_cmd_path(cmd[0], envp);

@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:24:25 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/07 20:17:24 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/09/08 19:41:26 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,8 @@ char	*find_cmd_path(char *cmd, char **envp);
 // pipex.c
 int		exec_pipex(t_pipex *pipex, char **envp, int i);
 void	init_pipex(t_pipex *pipex);
+// split.c
+char	**split_with_quotes(char *str, char delimiter);
+//BONUS
 
 #endif

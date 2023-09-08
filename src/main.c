@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 09:21:30 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/08 10:50:21 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/09/08 19:42:33 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ int	main(int argc, char **argv, char **envp)
 		err = exec_pipex(pipex, envp, i);
 		if (err != NO_ERR)
 			return (*(int *)pipex_exit(pipex, NULL, err));
-		wait(NULL);
 	}
+	i = -1;
+	while (++i < pipex->cmd_count)
+		wait(NULL);
 	return (*(int *)pipex_exit(pipex, NULL, END));
 }

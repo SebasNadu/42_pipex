@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/04 15:39:31 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/07 20:17:02 by sebasnadu        ###   ########.fr       */
+/*   Created: 2023/09/08 11:13:39 by sebasnadu         #+#    #+#             */
+/*   Updated: 2023/09/08 11:53:30 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,6 @@ void	*pipex_exit(t_pipex *pipex, char *param, int err)
 	if (pipex->is_urandom)
 		unlink(URANDOM_PATH);
 	free(pipex);
-	if (err == NO_ERR || err == END)
-		exit(EXIT_SUCCESS);
-	else
-		exit(EXIT_FAILURE);
+	exit(EXIT_SUCCESS);
 	return (0);
 }
