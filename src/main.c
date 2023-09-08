@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 09:21:30 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/08 19:42:33 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/09/08 19:50:01 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	*pipex;
-	int		i;
-	int		err;
 
 	if (argc != 5)
 		return (1);
@@ -30,15 +28,6 @@ int	main(int argc, char **argv, char **envp)
 		return (*(int *)pipex_exit(pipex, NULL, NO_PATH));
 	if (parse_cmd_args(pipex, argc, argv) == false)
 		return (*(int *)pipex_exit(pipex, NULL, NO_MEMORY));
-	i = -1;
-	while (++i < pipex->cmd_count)
-	{
-		err = exec_pipex(pipex, envp, i);
-		if (err != NO_ERR)
-			return (*(int *)pipex_exit(pipex, NULL, err));
-	}
-	i = -1;
-	while (++i < pipex->cmd_count)
-		wait(NULL);
+	pipex_controller(pipex, envp);
 	return (*(int *)pipex_exit(pipex, NULL, END));
 }

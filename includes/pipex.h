@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:24:25 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/08 19:41:26 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/09/08 19:49:41 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ t_bool	get_outfile(t_pipex *pipex, char **argv, int argc);
 // get_paths.c
 char	*find_cmd_path(char *cmd, char **envp);
 // pipex.c
+void	pipex_controller(t_pipex *pipex, char **envp);
 int		exec_pipex(t_pipex *pipex, char **envp, int i);
 void	init_pipex(t_pipex *pipex);
 // split.c
