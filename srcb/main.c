@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
+/*   By: johnavar <johnavar@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/08 09:21:30 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/08 10:50:21 by sebasnadu        ###   ########.fr       */
+/*   Created: 2023/07/28 13:05:13 by johnavar          #+#    #+#             */
+/*   Updated: 2023/09/08 10:45:32 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int argc, char **argv, char **envp)
 	int		i;
 	int		err;
 
-	if (argc != 5)
+	if (argc < 5)
 		return (1);
 	pipex = malloc(sizeof(t_pipex));
 	if (!pipex)

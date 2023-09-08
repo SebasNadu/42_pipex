@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/08 09:24:42 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/08 11:06:31 by sebasnadu        ###   ########.fr       */
+/*   Created: 2023/09/07 18:45:28 by sebasnadu         #+#    #+#             */
+/*   Updated: 2023/09/07 19:43:37 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	fork_and_pipe(t_pipex *pipex, int fd[2], pid_t *pid, int i)
 	{
 		if (i == 0)
 			dup_err = dup2(pipex->fd_in, STDIN_FILENO);
-		if (i == pipex->cmd_count -1)
+		if (i == pipex->cmd_count - 1)
 			dup_err = dup2(pipex->fd_out, STDOUT_FILENO);
 		else
 			dup_err = dup2(fd[1], STDOUT_FILENO);

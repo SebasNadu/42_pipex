@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/08 10:36:30 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/08 10:44:38 by sebasnadu        ###   ########.fr       */
+/*   Created: 2023/09/05 16:19:33 by sebasnadu         #+#    #+#             */
+/*   Updated: 2023/09/07 16:59:32 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,38 +16,26 @@ static char	**get_paths(char **envp, char *key)
 {
 	int		i;
 	char	*path;
-	char	**paths;
 
 	i = -1;
 	while (envp[++i])
-	{
-		if (ft_strncmp(envp[i], key, ft_strlen(key)) == 0)
-		{
-			path = ft_strchr(envp[i], '=');
-			if (!path)
-				return (NULL);
-			path++;
-			paths = ft_split(path, ':');
-			if (!paths)
-			{
-				free(path);
-				return (NULL);
-			}
-			return (paths);
-		}
-	}
-	return (NULL);
+		if (ft_strncmp(key, envp[i], ft_strlen(key)) == 0
+			&& envp[i][ft_strlen(key)] == '=')
+			path = ft_strchr(envp[i], '=') + 1;
+	if (!path)
+		return (NULL);
+	return (ft_split(path, ':'));
 }
 
 char	*find_cmd_path(char *cmd, char **envp)
 {
 	int		i;
-	char	*path;
 	char	**paths;
+	char	*path;
 	char	*full_path;
 
 	if (access(cmd, F_OK) == 0)
-		return (ft_strdup(cmd));
+		return (ft_substr(cmd, 0, ft_strlen(cmd)));
 	paths = get_paths(envp, "PATH");
 	if (!paths)
 		return (NULL);
