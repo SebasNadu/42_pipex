@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:24:25 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/08 19:49:41 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/09/11 22:26:10 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,25 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <sys/types.h>
+# include <errno.h>
 
 # define HERE_DOC_PATH ".pipex_here_doc"
 # define URANDOM_PATH ".pipex_urandom"
 
 enum e_pipex_err
 {
-	NO_ERR = 2,
-	END = 1,
-	CMD_NOT_FOUND = 0,
-	NO_FILE = -1,
-	NO_AUTH = -2,
-	INV_ARGS = -3,
-	NO_MEMORY = -4,
-	PIPE_ERR = -5,
-	DUP_ERR = -6,
-	FORK_ERR = -7,
-	NO_PATH = -8,
-	CMD_FAIL = -9,
+	NO_ERR = 0,
+	END = 0,
+	CMD_NOT_FOUND = -1,
+	NO_FILE = -2,
+	NO_AUTH = -3,
+	INV_ARGS = -4,
+	NO_MEMORY = -5,
+	PIPE_ERR = -6,
+	DUP_ERR = -7,
+	FORK_ERR = -8,
+	NO_PATH = -9,
+	CMD_FAIL = -10,
 };
 
 typedef enum e_bool
@@ -58,6 +59,7 @@ typedef struct s_pipex
 
 // exit.c
 void	*pipex_exit(t_pipex *pipex, char *param, int err);
+void	pipex_perror(char *param, int err);
 void	free_array(char **array, int size);
 // parse.c
 t_bool	parse_args(int argc, char **argv, t_pipex *pipex);

@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 09:24:42 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/08 19:49:03 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/09/11 23:00:59 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,12 @@ int	exec_pipex(t_pipex *pipex, char **envp, int i)
 	if (pid == 0)
 	{
 		if (pipex->cmd_paths[i])
-			execve(pipex->cmd_paths[i], pipex->cmd_args[i], envp);
+		{
+			if (execve(pipex->cmd_paths[i], pipex->cmd_args[i], envp) == -1)
+				pipex_exit(pipex, pipex->cmd_args[i][0], CMD_NOT_FOUND);
+		}
 		else
 			pipex_exit(pipex, pipex->cmd_args[i][0], CMD_NOT_FOUND);
-		pipex_exit(pipex, NULL, END);
 	}
 	else
 	{
@@ -81,6 +83,7 @@ void	pipex_controller(t_pipex *pipex, char **envp)
 {
 	int		i;
 	int		err;
+	int		status;
 
 	i = -1;
 	while (++i < pipex->cmd_count)
@@ -91,5 +94,7 @@ void	pipex_controller(t_pipex *pipex, char **envp)
 	}
 	i = -1;
 	while (++i < pipex->cmd_count)
-		wait(NULL);
+		waitpid(-1, &status, 0);
+	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
+		pipex_exit(pipex, NULL, WEXITSTATUS(status));
 }

@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 19:39:34 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/08 19:40:16 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/09/11 21:21:05 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,18 @@ static int	word_count(char *str, char delimiter)
 static char	*get_words(char *str, char delimiter, int *i)
 {
 	char	*result;
+	char	quote_type;
 
 	result = ft_calloc(1, sizeof(char));
-	if (str[*i] == '\"')
+	if (str[*i] == '\"' || str[*i] == '\'')
 	{
-		while (str[++(*i)] && str[*i] != '\"')
+		quote_type = str[*i];
+		while (str[++(*i)] && str[*i] != quote_type)
+		{
+			if (str[*i] == '\\' && str[*i + 1] == quote_type)
+				(*i)++;
 			result = ft_strjoin(result, ft_substr(str, *i, 1));
-	}
-	else if (str[*i] == '\'')
-	{
-		while (str[++(*i)] && str[*i] != '\'')
-			result = ft_strjoin(result, ft_substr(str, *i, 1));
+		}
 	}
 	else
 	{

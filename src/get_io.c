@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 09:42:14 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/08 10:00:23 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/09/11 23:20:02 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,18 @@ t_bool	get_infile(t_pipex *pipex, char **argv)
 {
 	if (pipex->is_urandom == true)
 	{
-		if (urandom_handler())
+		if (!urandom_handler())
 			return (false);
 		pipex->fd_in = open(URANDOM_PATH, O_RDONLY);
 	}
 	else
 	{
 		if (access(argv[1], F_OK) == -1)
-			return (false);
+			pipex->fd_in = open(argv[1], O_RDONLY | O_CREAT, 0644);
 		else
 			pipex->fd_in = open(argv[1], O_RDONLY);
 	}
 	if (pipex->fd_in == -1)
-		return (false);
+		pipex_exit(pipex, NULL, 2);
 	return (true);
 }
