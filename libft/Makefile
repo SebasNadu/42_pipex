@@ -6,7 +6,7 @@
 #    By: johnavar <johnavar@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/02 16:45:08 by johnavar          #+#    #+#              #
-#    Updated: 2023/07/26 23:48:28 by sebasnadu        ###   ########.fr        #
+#    Updated: 2023/09/12 16:46:46 by sebasnadu        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ INCLUDES	= includes
 
 CC			= cc
 FLAGS		= -Wall -Wextra -Werror
-RM			= rm -f
+RM			= rm -rf
 PRINTF		= printf
 
 LIBC		= ar -rcs
@@ -64,8 +64,7 @@ $(NAME):	$(OBJS)
 
 clean:
 	@$(PRINTF) "$(CYAN)Cleaning up object files in libft...$(DEFAULT)\n"
-	@$(RM) $(OBJS)
-	@$(RM) -r $(DIR_OBJS)
+	@$(RM) $(DIR_OBJS)
 
 fclean:		clean
 	@$(RM) $(NAME)

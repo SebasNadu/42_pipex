@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:24:25 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/12 10:24:50 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/09/12 16:49:54 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,5 @@ int		exec_pipex(t_pipex *pipex, char **envp, int i);
 void	init_pipex(t_pipex *pipex);
 // split.c
 char	**split_with_quotes(char *str, char delimiter);
-//BONUS
 
 #endif

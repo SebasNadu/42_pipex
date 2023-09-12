@@ -6,7 +6,7 @@
 #    By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/25 11:34:58 by sebasnadu         #+#    #+#              #
-#    Updated: 2023/09/12 13:42:54 by sebasnadu        ###   ########.fr        #
+#    Updated: 2023/09/12 16:44:45 by sebasnadu        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,13 +88,14 @@ $(DIR_OBJ_BONUS)/%.o: $(DIR_SRC_BONUS)/%.c
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
-	@$(PRINTF) "$(CYAN)Cleaning up object files in $(DIR_OBJS)...$(DEFAULT)\n"
 	@make clean -C $(LIBFT_DIR)
-	@$(RM) -rf $(DIR_OBJS)
-	@$(RM) -rf $(DIR_OBJS_BONUS)
+	@$(PRINTF) "$(CYAN)Cleaning up object files in $(DIR_OBJ)...$(DEFAULT)\n"
+	@$(RM) -rf $(DIR_OBJ)
+	@$(PRINTF) "$(CYAN)Cleaning up object files in $(DIR_OBJ_BONUS)...$(DEFAULT)\n"
+	@$(RM) -rf $(DIR_OBJ_BONUS)
 
 fclean: clean
-	@make fclean -C $(LIBFT_DIR)
+	@$(RM) $(LIBFT_DIR)/libft.a
 	@$(RM) $(NAME)
 	@$(PRINTF) "$(CYAN)Removed $(LIBFT)$(DEFAULT)\n"
 	@$(PRINTF) "$(CYAN)Removed $(NAME)$(DEFAULT)\n"
