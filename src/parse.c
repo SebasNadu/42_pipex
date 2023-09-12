@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 09:31:38 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/08 19:39:50 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/09/12 10:31:15 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ t_bool	parse_cmd_paths(t_pipex *pipex, int argc, char **argv, char **envp)
 		if (!cmd)
 			return (false);
 		pipex->cmd_paths[i - 2] = find_cmd_path(cmd[0], envp);
+		if (pipex->cmd_paths[i - 2] == NULL)
+			pipex->cmd_paths[i - 2] = ft_strjoin("/usr/bin/", cmd[0]);
 		free_array(cmd, -1);
 	}
 	return (true);

@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 11:13:39 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/11 23:27:30 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/09/12 10:24:37 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,14 @@ void	*pipex_exit(t_pipex *pipex, char *param, int err)
 	else
 		exit(EXIT_SUCCESS);
 	return (0);
+}
+
+void	broken_pipe_perror(t_pipex *pipex, int i)
+{
+	if (i == 0)
+		pipex_exit(pipex, pipex->cmd_args[i][0], CMD_NOT_FOUND);
+	pipex_perror(pipex->cmd_args[i][0], CMD_NOT_FOUND);
+	ft_putstr_fd(pipex->cmd_args[0][0], STDERR_FILENO);
+	ft_putstr_fd(": stdout: Broken pipe\n", STDERR_FILENO);
+	pipex_exit(pipex, NULL, 127);
 }

@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 09:24:42 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/11 23:00:59 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/09/12 10:24:28 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	exec_pipex(t_pipex *pipex, char **envp, int i)
 		if (pipex->cmd_paths[i])
 		{
 			if (execve(pipex->cmd_paths[i], pipex->cmd_args[i], envp) == -1)
-				pipex_exit(pipex, pipex->cmd_args[i][0], CMD_NOT_FOUND);
+				broken_pipe_perror(pipex, i);
 		}
 		else
 			pipex_exit(pipex, pipex->cmd_args[i][0], CMD_NOT_FOUND);
