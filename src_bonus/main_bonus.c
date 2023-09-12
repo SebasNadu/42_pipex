@@ -6,7 +6,7 @@
 /*   By: johnavar <johnavar@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 13:05:13 by johnavar          #+#    #+#             */
-/*   Updated: 2023/09/08 10:45:32 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/09/12 13:33:01 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	*pipex;
-	int		i;
-	int		err;
 
 	if (argc < 5)
 		return (1);
@@ -25,18 +23,11 @@ int	main(int argc, char **argv, char **envp)
 		return (*(int *)pipex_exit(NULL, NULL, NO_MEMORY));
 	init_pipex(pipex);
 	if (parse_args(argc, argv, pipex) == false)
-		return (1);
+		return (*(int *)pipex_exit(pipex, NULL, INV_ARGS));
 	if (parse_cmd_paths(pipex, argc, argv, envp) == false)
 		return (*(int *)pipex_exit(pipex, NULL, NO_PATH));
 	if (parse_cmd_args(pipex, argc, argv) == false)
 		return (*(int *)pipex_exit(pipex, NULL, NO_MEMORY));
-	i = -1;
-	while (++i < pipex->cmd_count)
-	{
-		err = exec_pipex(pipex, envp, i);
-		if (err != NO_ERR)
-			return (*(int *)pipex_exit(pipex, NULL, err));
-		wait(NULL);
-	}
+	pipex_controller(pipex, envp);
 	return (*(int *)pipex_exit(pipex, NULL, END));
 }

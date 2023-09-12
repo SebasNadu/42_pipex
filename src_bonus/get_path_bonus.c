@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:19:33 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/07 16:59:32 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/09/12 16:29:38 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,27 @@ static char	**get_paths(char **envp, char *key)
 {
 	int		i;
 	char	*path;
+	char	**paths;
 
 	i = -1;
 	while (envp[++i])
-		if (ft_strncmp(key, envp[i], ft_strlen(key)) == 0
-			&& envp[i][ft_strlen(key)] == '=')
-			path = ft_strchr(envp[i], '=') + 1;
-	if (!path)
-		return (NULL);
-	return (ft_split(path, ':'));
+	{
+		if (ft_strncmp(envp[i], key, ft_strlen(key)) == 0)
+		{
+			path = ft_strchr(envp[i], '=');
+			if (!path)
+				return (NULL);
+			path++;
+			paths = ft_split(path, ':');
+			if (!paths)
+			{
+				free(path);
+				return (NULL);
+			}
+			return (paths);
+		}
+	}
+	return (NULL);
 }
 
 char	*find_cmd_path(char *cmd, char **envp)

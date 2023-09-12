@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:16:03 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/08 09:50:10 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/09/12 13:37:54 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,11 +104,9 @@ t_bool	get_infile(t_pipex *pipex, char **argv)
 	else
 	{
 		if (access(argv[1], F_OK) == -1)
-			return (false);
+			pipex->fd_in = open(argv[1], O_RDONLY | O_CREAT, 0644);
 		else
 			pipex->fd_in = open(argv[1], O_RDONLY);
 	}
-	if (pipex->fd_in < 0)
-		return (false);
 	return (true);
 }

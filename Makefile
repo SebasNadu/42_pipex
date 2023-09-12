@@ -6,7 +6,7 @@
 #    By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/25 11:34:58 by sebasnadu         #+#    #+#              #
-#    Updated: 2023/09/08 18:12:40 by sebasnadu        ###   ########.fr        #
+#    Updated: 2023/09/12 13:42:54 by sebasnadu        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,9 +77,9 @@ $(DIR_OBJ)/%.o: $(DIR_SRC)/%.c
 $(LIBFT):
 	@make -C $(LIBFT_DIR)
 
-# bonus: $(LIBFT) $(OBJ_BONUS)
-# 	@$(CC) $(CFLAGS) $(OBJ_BONUS) $(LIBFT_FLAGS) -o $(NAME)
-# 	@$(PRINTF) "\r%100s\r$(GREEN)$(NAME) is up to date!$(DEFAULT)\n"
+bonus: $(LIBFT) $(OBJ_BONUS)
+	@$(CC) $(CFLAGS) $(OBJ_BONUS) $(LIBFT_FLAGS) -o $(NAME)
+	@$(PRINTF) "\r%100s\r$(GREEN)$(NAME) is up to date!$(DEFAULT)\n"
 
 $(DIR_OBJ_BONUS)/%.o: $(DIR_SRC_BONUS)/%.c
 	@mkdir -p $(DIR_OBJ_BONUS)

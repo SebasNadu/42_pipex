@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:09:49 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/08 09:30:29 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/09/12 11:10:11 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_bool	parse_cmd_args(t_pipex *pipex, int argc, char **argv)
 	i = 1 + pipex->here_doc;
 	while (++i < argc - 1)
 	{
-		cmd = ft_split(argv[i], ' ');
+		cmd = split_with_quotes(argv[i], ' ');
 		if (!cmd)
 			return (false);
 		pipex->cmd_args[i - 2 - pipex->here_doc] = cmd;
@@ -42,10 +42,13 @@ t_bool	parse_cmd_paths(t_pipex *pipex, int argc, char **argv, char **envp)
 	i = 1 + pipex->here_doc;
 	while (++i < argc - 1)
 	{
-		cmd = ft_split(argv[i], ' ');
+		cmd = split_with_quotes(argv[i], ' ');
 		if (!cmd)
 			return (false);
 		pipex->cmd_paths[i - 2 - pipex->here_doc] = find_cmd_path(cmd[0], envp);
+		if (pipex->cmd_paths[i - 2 - pipex->here_doc] == NULL)
+			pipex->cmd_paths[i - 2 - pipex->here_doc]
+				= ft_strjoin("/usr/bin/", cmd[0]);
 		free_array(cmd, -1);
 	}
 	return (true);

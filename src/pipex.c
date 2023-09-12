@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 09:24:42 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/12 10:24:28 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/09/12 13:13:30 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int	exec_pipex(t_pipex *pipex, char **envp, int i)
 		}
 		else
 			pipex_exit(pipex, pipex->cmd_args[i][0], CMD_NOT_FOUND);
+		pipex_exit(pipex, NULL, 2);
 	}
 	else
 	{
@@ -94,7 +95,9 @@ void	pipex_controller(t_pipex *pipex, char **envp)
 	}
 	i = -1;
 	while (++i < pipex->cmd_count)
+	{
 		waitpid(-1, &status, 0);
-	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
-		pipex_exit(pipex, NULL, WEXITSTATUS(status));
+		if (WIFEXITED(status) && WEXITSTATUS(status) != 0 && i != 0)
+			pipex_exit(pipex, NULL, WEXITSTATUS(status));
+	}
 }

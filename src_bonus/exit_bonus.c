@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 15:39:31 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/07 20:17:02 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/09/12 13:34:53 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,17 @@
 void	pipex_perror(char *param, int err)
 {
 	ft_putstr_fd("pipex: ", STDERR_FILENO);
+	if (param && (err == CMD_NOT_FOUND || err == NO_FILE || err == NO_AUTH
+			|| err == CMD_FAIL))
+		ft_putstr_fd(param, STDERR_FILENO);
 	if (err == CMD_NOT_FOUND)
-		ft_putstr_fd("command not found: ", STDERR_FILENO);
+		ft_putstr_fd(": command not found", STDERR_FILENO);
 	else if (err == NO_FILE)
-		ft_putstr_fd("no such file or directory: ", STDERR_FILENO);
+		ft_putstr_fd(": no such file or directory", STDERR_FILENO);
 	else if (err == NO_AUTH)
 		ft_putstr_fd("permission denied: ", STDERR_FILENO);
 	else if (err == CMD_FAIL)
-		ft_putstr_fd("command failed: ", STDERR_FILENO);
+		ft_putstr_fd(": command failed", STDERR_FILENO);
 	else if (err == INV_ARGS)
 		ft_putstr_fd("invalid arguments: ", STDERR_FILENO);
 	else if (err == NO_MEMORY)
@@ -35,9 +38,6 @@ void	pipex_perror(char *param, int err)
 		ft_putstr_fd("could not create the child process: ", STDERR_FILENO);
 	else if (err == NO_PATH)
 		ft_putstr_fd("PATH variable is not set ", STDERR_FILENO);
-	if (param && (err == CMD_NOT_FOUND || err == NO_FILE || err == NO_AUTH
-			|| err == CMD_FAIL))
-		ft_putstr_fd(param, STDERR_FILENO);
 	ft_putstr_fd("\n", STDERR_FILENO);
 }
 
@@ -73,7 +73,7 @@ void	free_matrix(char ***matrix, int size)
 
 void	*pipex_exit(t_pipex *pipex, char *param, int err)
 {
-	if (err < 1 || param)
+	if (err < 0 || param)
 		pipex_perror(param, err);
 	if (pipex->fd_in != -2)
 		close(pipex->fd_in);
@@ -88,9 +88,21 @@ void	*pipex_exit(t_pipex *pipex, char *param, int err)
 	if (pipex->is_urandom)
 		unlink(URANDOM_PATH);
 	free(pipex);
-	if (err == NO_ERR || err == END)
-		exit(EXIT_SUCCESS);
+	if (err > 0)
+		exit(err);
+	else if (err < 0)
+		exit(2);
 	else
-		exit(EXIT_FAILURE);
+		exit(EXIT_SUCCESS);
 	return (0);
+}
+
+void	broken_pipe_perror(t_pipex *pipex, int i)
+{
+	if (i == 0)
+		pipex_exit(pipex, pipex->cmd_args[i][0], CMD_NOT_FOUND);
+	pipex_perror(pipex->cmd_args[i][0], CMD_NOT_FOUND);
+	ft_putstr_fd(pipex->cmd_args[0][0], STDERR_FILENO);
+	ft_putstr_fd(": stdout: Broken pipe\n", STDERR_FILENO);
+	pipex_exit(pipex, NULL, 127);
 }

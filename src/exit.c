@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 11:13:39 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/12 10:24:37 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/09/12 13:35:08 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	pipex_perror(char *param, int err)
 	if (err == CMD_NOT_FOUND)
 		ft_putstr_fd(": command not found", STDERR_FILENO);
 	else if (err == NO_FILE)
-		ft_putstr_fd("no such file or directory: ", STDERR_FILENO);
+		ft_putstr_fd(": no such file or directory", STDERR_FILENO);
 	else if (err == NO_AUTH)
 		ft_putstr_fd("permission denied: ", STDERR_FILENO);
 	else if (err == CMD_FAIL)
@@ -73,7 +73,7 @@ void	free_matrix(char ***matrix, int size)
 
 void	*pipex_exit(t_pipex *pipex, char *param, int err)
 {
-	if (err < 1 || param)
+	if (err < 0 || param)
 		pipex_perror(param, err);
 	if (pipex->fd_in != -2)
 		close(pipex->fd_in);
@@ -88,7 +88,7 @@ void	*pipex_exit(t_pipex *pipex, char *param, int err)
 	if (pipex->is_urandom)
 		unlink(URANDOM_PATH);
 	free(pipex);
-	if (err > 1)
+	if (err > 0)
 		exit(err);
 	else if (err < 0)
 		exit(2);
