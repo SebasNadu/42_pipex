@@ -6,7 +6,7 @@
 #    By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/25 11:34:58 by sebasnadu         #+#    #+#              #
-#    Updated: 2023/09/12 16:44:45 by sebasnadu        ###   ########.fr        #
+#    Updated: 2023/09/13 20:46:10 by sebasnadu        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,17 +45,17 @@ OBJ				= $(SRC:$(DIR_SRC)/%.c=$(DIR_OBJ)/%.o)
 OBJ_BONUS 		= $(SRC_BONUS:$(DIR_SRC_BONUS)/%.c=$(DIR_OBJ_BONUS)/%.o)
 
 # progress bar
-SRC_COUNT_TOT := $(shell expr $(shell echo -n $(SRC) | wc -w) - $(shell ls -l $(OBJ_DIR) 2>&1 | grep ".o" | wc -l) + 1)
+SRC_COUNT_TOT := $(shell expr $(shell echo -n $(SRC) | wc -w) - $(shell ls -l $(DIR_OBJ) 2>&1 | grep ".o" | wc -l))
 ifeq ($(shell test $(SRC_COUNT_TOT) -le 0; echo $$?),0)
-	SRC_COUNT_TOT := $(shell echo -n $(SRC) | wc -w)
+	SRC_COUNT_TOT := $(shell expr $(shell echo -n $(SRC) | wc -w) - 1)
 endif
 SRC_COUNT := 0
 SRC_PCT = $(shell expr 100 \* $(SRC_COUNT) / $(SRC_COUNT_TOT))
 
 # bonus progress bar
-SRCB_COUNT_TOT := $(shell expr $(shell echo -n $(SRC_BONUS) | wc -w) - $(shell ls -l $(DIR_OBJ_BONUS) 2>&1 | grep ".o" | wc -l) + 1)
+SRCB_COUNT_TOT := $(shell expr $(shell echo -n $(SRC_BONUS) | wc -w) - $(shell ls -l $(DIR_OBJ_BONUS) 2>&1 | grep ".o" | wc -l))
 ifeq ($(shell test $(SRCB_COUNT_TOT) -le 0; echo $$?),0)
-	SRCB_COUNT_TOT := $(shell echo -n $(SRC_BONUS) | wc -w)
+	SRCB_COUNT_TOT := $(shell expr $(shell echo -n $(SRC_BONUS) | wc -w) - 1)
 endif
 SRCB_COUNT := 0
 SRCB_PCT = $(shell expr 100 \* $(SRCB_COUNT) / $(SRCB_COUNT_TOT))
