@@ -6,19 +6,19 @@
 /*   By: johnavar <johnavar@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 11:11:33 by johnavar          #+#    #+#             */
-/*   Updated: 2023/07/04 18:10:55 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/09/19 16:54:40 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/ft_printf.h"
 
-void	ft_flag_left(t_print *flags)
+static void	ft_flag_left(t_print *flags)
 {
 	flags->left = 1;
 	flags->zero = 0;
 }
 
-int	ft_flag_prec(const char *format, int i, va_list *ap, t_print *flags)
+static int	ft_flag_prec(const char *format, int i, va_list *ap, t_print *flags)
 {
 	int	j;
 
@@ -39,7 +39,7 @@ int	ft_flag_prec(const char *format, int i, va_list *ap, t_print *flags)
 	return (j);
 }
 
-void	ft_flag_star(va_list *ap, t_print *flags)
+static void	ft_flag_star(va_list *ap, t_print *flags)
 {
 	flags->star = 1;
 	flags->width = va_arg(*ap, int);
@@ -50,25 +50,38 @@ void	ft_flag_star(va_list *ap, t_print *flags)
 	}
 }
 
-void	ft_flag_digit(char c, t_print *flags)
+static void	ft_flag_digit(char c, t_print *flags)
 {
 	if (flags->star == 1)
 		flags->width = 0;
 	flags->width = (flags->width * 10) + (c - '0');
 }
 
-t_print	ft_initialize_tab(void)
+int	ft_parse_flags(const char *format, int i, va_list *ap, t_print *flags)
 {
-	t_print	flags;
-
-	flags.spec = 0;
-	flags.width = 0;
-	flags.left = 0;
-	flags.zero = 0;
-	flags.precision = -1;
-	flags.hash = 0;
-	flags.space = 0;
-	flags.plus = 0;
-	flags.star = 0;
-	return (flags);
+	while (format[++i] && ft_isflag(format[i]))
+	{
+		if (format[i] == '-')
+			ft_flag_left(flags);
+		if (format[i] == '#')
+			flags->hash = 1;
+		if (format[i] == ' ')
+			flags->space = 1;
+		if (format[i] == '+')
+			flags->plus = 1;
+		if (format[i] == '0' && flags->left == 0 && flags->width == 0)
+			flags->zero = 1;
+		if (format[i] == '.')
+			i = ft_flag_prec(format, i, ap, flags);
+		if (format[i] == '*')
+			ft_flag_star(ap, flags);
+		if (ft_isdigit(format[i]))
+			ft_flag_digit(format[i], flags);
+		if (ft_istype(format[i]))
+		{
+			flags->spec = format[i];
+			break ;
+		}
+	}
+	return (i);
 }
