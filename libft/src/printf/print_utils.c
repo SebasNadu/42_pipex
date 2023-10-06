@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   number_utils.c                                     :+:      :+:    :+:   */
+/*   print_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 11:39:30 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/07/04 18:11:56 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/09/19 15:52:14 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/ft_printf.h"
 
-int	ft_print_pad(int width, int size, int zero)
+int	ft_print_pad(int fd, int width, int size, int zero)
 {
 	int	count;
 
@@ -20,24 +20,24 @@ int	ft_print_pad(int width, int size, int zero)
 	while (width - size > 0)
 	{
 		if (zero)
-			count += write(1, "0", 1);
+			count += write(fd, "0", 1);
 		else
-			count += write(1, " ", 1);
+			count += write(fd, " ", 1);
 		width--;
 	}
 	return (count);
 }
 
-int	ft_print_s(char *str)
+int	ft_print_s(int fd, char *str)
 {
 	int	count;
 
 	if (str == NULL)
-		return (write(1, "(null)", 6));
+		return (write(fd, "(null)", 6));
 	count = 0;
 	while (str[count])
 		count++;
-	write(1, str, count);
+	write(fd, str, count);
 	return (count);
 }
 
@@ -61,7 +61,7 @@ int	ft_nbr_len(long int n, int base)
 	return (len);
 }
 
-int	ft_print_digit(long n, int base, char mode)
+int	ft_print_digit(int fd, long n, int base, char mode)
 {
 	int		count;
 	char	*symbols;
@@ -72,14 +72,14 @@ int	ft_print_digit(long n, int base, char mode)
 		symbols = "0123456789abcdef";
 	if (n < 0)
 	{
-		write(1, "-", 1);
-		return (ft_print_digit(-n, base, mode) + 1);
+		write(fd, "-", 1);
+		return (ft_print_digit(fd, -n, base, mode) + 1);
 	}
 	else if (n < base)
-		return (write(1, &symbols[n], 1));
+		return (write(fd, &symbols[n], 1));
 	else
 	{
-		count = ft_print_digit(n / base, base, mode);
-		return (count + ft_print_digit(n % base, base, mode));
+		count = ft_print_digit(fd, n / base, base, mode);
+		return (count + ft_print_digit(fd, n % base, base, mode));
 	}
 }

@@ -19,6 +19,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <sys/types.h>
+# include <sys/wait.h>
 # include <errno.h>
 
 # define HERE_DOC_PATH ".pipex_here_doc"
