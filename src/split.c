@@ -6,11 +6,38 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 19:39:34 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/11 21:21:05 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/10/06 13:03:52 by johnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
+
+static char	*ft_strjoin_wfree(char *s1, char *s2)
+{
+	int		i;
+	int		j;
+	char	*str;
+
+	i = 0;
+	j = 0;
+	str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (str == NULL)
+		return (NULL);
+	while (s1[i] != '\0')
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	while (s2[j] != '\0')
+	{
+		str[i + j] = s2[j];
+		j++;
+	}
+	str[i + j] = '\0';
+	free(s1);
+	free(s2);
+	return (str);
+}
 
 static void	parse_words(char *str, char delimiter, int *i, int *count)
 {
@@ -67,14 +94,14 @@ static char	*get_words(char *str, char delimiter, int *i)
 		{
 			if (str[*i] == '\\' && str[*i + 1] == quote_type)
 				(*i)++;
-			result = ft_strjoin(result, ft_substr(str, *i, 1));
+			result = ft_strjoin_wfree(result, ft_substr(str, *i, 1));
 		}
 	}
 	else
 	{
 		while (str[*i] && str[*i] != delimiter)
 		{
-			result = ft_strjoin(result, ft_substr(str, *i, 1));
+			result = ft_strjoin_wfree(result, ft_substr(str, *i, 1));
 			(*i)++;
 		}
 	}
