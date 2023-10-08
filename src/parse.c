@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 09:31:38 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/12 13:25:52 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/10/09 00:57:04 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_bool	parse_args(int argc, char **argv, t_pipex *pipex)
 		&& ft_strlen(argv[1]) == 12)
 		pipex->is_urandom = true;
 	if (get_infile(pipex, argv) == false)
-		return (*(int *)pipex_exit(pipex, argv[1], NO_FILE));
+		pipex_perror(argv[1], NO_FILE);
 	pipex->fd_out = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (pipex->fd_out < 0)
 		return (*(int *)pipex_exit(pipex, argv[argc - 1], NO_FILE));

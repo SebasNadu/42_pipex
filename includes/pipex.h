@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:24:25 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/12 16:49:54 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/10/09 00:45:25 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 # define HERE_DOC_PATH ".pipex_here_doc"
 # define URANDOM_PATH ".pipex_urandom"
+# define NO_INFILE ".pipex_tmp"
 
 enum e_pipex_err
 {
@@ -53,6 +54,7 @@ typedef struct s_pipex
 	int		fd_out;
 	t_bool	here_doc;
 	t_bool	is_urandom;
+	t_bool	is_in_cpy;
 	char	**cmd_paths;
 	char	***cmd_args;
 	int		cmd_count;

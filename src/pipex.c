@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 09:24:42 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/10/05 19:45:41 by johnavar         ###   ########.fr       */
+/*   Updated: 2023/10/09 00:41:03 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	init_pipex(t_pipex *pipex)
 	pipex->fd_out = -2;
 	pipex->here_doc = false;
 	pipex->is_urandom = false;
+	pipex->is_in_cpy = false;
 	pipex->cmd_paths = NULL;
 	pipex->cmd_args = NULL;
 	pipex->cmd_count = 0;
@@ -40,7 +41,7 @@ static int	fork_and_pipe(t_pipex *pipex, int fd[2], pid_t *pid, int i)
 	{
 		if (i == 0)
 			dup_err = dup2(pipex->fd_in, STDIN_FILENO);
-		if (i == pipex->cmd_count -1)
+		if (i == pipex->cmd_count - 1)
 			dup_err = dup2(pipex->fd_out, STDOUT_FILENO);
 		else
 			dup_err = dup2(fd[1], STDOUT_FILENO);
