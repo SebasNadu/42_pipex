@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 09:31:38 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/10/09 00:57:04 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/10/09 12:57:52 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,49 @@ t_bool	parse_cmd_args(t_pipex *pipex, int argc, char **argv)
 	return (true);
 }
 
+void	cmd_cleaner(char *cmd)
+{
+	char	*tmp;
+	int		i;
+	int		j;
+
+	tmp = ft_calloc(ft_strlen(cmd) + 1, sizeof(char));
+	i = -1;
+	j = -1;
+	while (cmd[++i])
+	{
+		if (!ft_isalnum(cmd[i]) || !ft_isspace(cmd[i])
+			|| cmd[i] == '/' || cmd[i] == '.')
+			continue ;
+		tmp[++j] = cmd[i];
+	}
+	if (access(tmp, F_OK))
+	{
+		ft_strlcpy(cmd, tmp, ft_strlen(tmp) + 1);
+		free(tmp);
+		return ;
+	}
+	free(tmp);
+}
+
+char	*path_creator(char **cmd)
+{
+	char	*path;
+	int		i;
+
+	path = ft_strdup(cmd[0]);
+	i = 0;
+	while (cmd[++i])
+		path = ft_strjoin(path, cmd[i]);
+	printf("path: %s\n", path);
+	if (!access(path, F_OK))
+	{
+		free(path);
+		return (NULL);
+	}
+	return (path);
+}
+
 t_bool	parse_cmd_paths(t_pipex *pipex, int argc, char **argv, char **envp)
 {
 	int		i;
@@ -42,6 +85,11 @@ t_bool	parse_cmd_paths(t_pipex *pipex, int argc, char **argv, char **envp)
 	i = 1;
 	while (++i < argc -1)
 	{
+		if (access(argv[i], F_OK) == 0)
+		{
+			pipex->cmd_paths[i - 2] = ft_strdup(argv[i]);
+			continue ;
+		}
 		cmd = split_with_quotes(argv[i], ' ');
 		if (!cmd)
 			return (false);
@@ -60,7 +108,14 @@ t_bool	parse_args(int argc, char **argv, t_pipex *pipex)
 		pipex->is_urandom = true;
 	if (get_infile(pipex, argv) == false)
 		pipex_perror(argv[1], NO_FILE);
-	pipex->fd_out = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (access(argv[argc - 1], F_OK) == -1)
+		pipex->fd_out = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC,
+				0644);
+	else if (access(argv[argc - 1], R_OK) == -1)
+		pipex_exit(pipex, argv[argc - 1], NO_WRITE);
+	else
+		pipex->fd_out = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC,
+				0644);
 	if (pipex->fd_out < 0)
 		return (*(int *)pipex_exit(pipex, argv[argc - 1], NO_FILE));
 	pipex->cmd_count = argc - 3;

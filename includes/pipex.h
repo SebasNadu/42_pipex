@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:24:25 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/10/09 00:45:25 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/10/09 12:51:51 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ enum e_pipex_err
 	FORK_ERR = -8,
 	NO_PATH = -9,
 	CMD_FAIL = -10,
+	NO_READ = -11,
+	NO_WRITE = -12,
 };
 
 typedef enum e_bool

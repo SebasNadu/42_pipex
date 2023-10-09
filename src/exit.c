@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 11:13:39 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/10/09 00:46:00 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/10/09 12:52:19 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,10 @@ void	pipex_perror(char *param, int err)
 		ft_putstr_fd("Could not create the child process: ", STDERR_FILENO);
 	else if (err == NO_PATH)
 		ft_putstr_fd("PATH variable is not set ", STDERR_FILENO);
+	else if (err == NO_READ || err == NO_WRITE)
+		ft_putstr_fd("permission denied: ", STDERR_FILENO);
+	if (param && (err == NO_READ || err == NO_WRITE))
+		ft_putstr_fd(param, STDERR_FILENO);
 	ft_putstr_fd("\n", STDERR_FILENO);
 }
 
