@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 09:24:42 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/10/09 00:41:03 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/10/09 17:58:09 by johnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static int	fork_and_pipe(t_pipex *pipex, int fd[2], pid_t *pid, int i)
 	return (NO_ERR);
 }
 
+// broken_pipe_perror(pipex, i);
 int	exec_pipex(t_pipex *pipex, char **envp, int i)
 {
 	int		fd[2];
@@ -67,7 +68,7 @@ int	exec_pipex(t_pipex *pipex, char **envp, int i)
 		if (pipex->cmd_paths[i])
 		{
 			if (execve(pipex->cmd_paths[i], pipex->cmd_args[i], envp) == -1)
-				broken_pipe_perror(pipex, i);
+				pipex_exit(pipex, pipex->cmd_args[i][0], CMD_NOT_FOUND);
 		}
 		else
 			pipex_exit(pipex, pipex->cmd_args[i][0], CMD_NOT_FOUND);
