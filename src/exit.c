@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 11:13:39 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/10/09 18:02:43 by johnavar         ###   ########.fr       */
+/*   Updated: 2023/10/12 18:25:57 by johnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	free_matrix(char ***matrix, int size)
 
 void	*pipex_exit(t_pipex *pipex, char *param, int err)
 {
-	if (err < 0 || param)
+	if (err != 0 || param)
 		pipex_perror(param, err);
 	if (pipex->fd_in != -2)
 		close(pipex->fd_in);
@@ -61,12 +61,13 @@ void	*pipex_exit(t_pipex *pipex, char *param, int err)
 	if (pipex->is_urandom)
 		unlink(URANDOM_PATH);
 	free(pipex);
-	if (err > 0)
-		exit(127);
-	else if (err < 0)
-		exit(2);
-	else
-		exit(EXIT_SUCCESS);
+	exit(err);
+	/*if (err > 1)*/
+		/*exit(127);*/
+	/*else if (err < 0)*/
+		/*exit(2);*/
+	/*else*/
+		/*exit(err);*/
 	return (0);
 }
 

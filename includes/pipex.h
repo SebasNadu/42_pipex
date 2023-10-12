@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:24:25 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/10/09 12:51:51 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/10/12 10:53:11 by johnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ enum e_pipex_err
 {
 	NO_ERR = 0,
 	END = 0,
-	CMD_NOT_FOUND = -1,
+	CMD_NOT_FOUND = 127,
 	NO_FILE = -2,
 	NO_AUTH = -3,
 	INV_ARGS = -4,
