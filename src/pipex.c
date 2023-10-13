@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 09:24:42 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/10/12 18:50:49 by johnavar         ###   ########.fr       */
+/*   Updated: 2023/10/13 13:20:21 by johnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,13 @@ int	exec_pipex(t_pipex *pipex, char **envp, int i)
 	{
 		if (pipex->cmd_paths[i])
 		{
-			/*if (execve(pipex->cmd_paths[i], pipex->cmd_args[i], envp) == -1)*/
-				/*pipex_exit(pipex, pipex->cmd_args[i][0], CMD_NOT_FOUND);*/
-			execve(pipex->cmd_paths[i], pipex->cmd_args[i], envp);
+			if (execve(pipex->cmd_paths[i], pipex->cmd_args[i], envp) != 0)
+				pipex_exit(pipex, pipex->cmd_args[i][0], CMD_NOT_FOUND);
+			/*execve(pipex->cmd_paths[i], pipex->cmd_args[i], envp);*/
 		}
 		else
 			pipex_exit(pipex, pipex->cmd_args[i][0], CMD_NOT_FOUND);
-		/*pipex_exit(pipex, NULL, 2);*/
+		/*pipex_exit(pipex, NULL, 0);*/
 	}
 	else
 	{
@@ -101,10 +101,7 @@ void	pipex_controller(t_pipex *pipex, char **envp)
 	{
 		waitpid(-1, &status, 0);
 		if (WIFEXITED(status) && WEXITSTATUS(status) != 0 && i != 0)
-		{
-			printf("inside");
-			printf("exit: %d", WEXITSTATUS(status));
-			pipex_exit(pipex, NULL, WEXITSTATUS(status));
-		}
+			exit(WEXITSTATUS(status));
+			/*pipex_exit(pipex, NULL, WEXITSTATUS(status));*/
 	}
 }
