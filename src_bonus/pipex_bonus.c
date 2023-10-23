@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 18:45:28 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/12 11:04:45 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/10/23 22:24:13 by johnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,20 @@ static int	fork_and_pipe(t_pipex *pipex, int fd[2], pid_t *pid, int i)
 	return (NO_ERR);
 }
 
+static void	exec_pipex2(t_pipex *pipex, char **envp, int i)
+{
+	if (pipex->cmd_paths[i])
+	{
+		if (access(pipex->cmd_paths[i], F_OK) == -1)
+			pipex_exit(pipex, pipex->cmd_args[i][0], CMD_NOT_FOUND);
+		if (access(pipex->cmd_paths[i], X_OK) == -1)
+			pipex_exit(pipex, pipex->cmd_args[i][0], NO_AUTH);
+		execve(pipex->cmd_paths[i], pipex->cmd_args[i], envp);
+	}
+	else
+		pipex_exit(pipex, pipex->cmd_args[i][0], CMD_NOT_FOUND);
+}
+
 int	exec_pipex(t_pipex *pipex, char **envp, int i)
 {
 	int		fd[2];
@@ -62,15 +76,7 @@ int	exec_pipex(t_pipex *pipex, char **envp, int i)
 	if (err != NO_ERR)
 		return (err);
 	if (pid == 0)
-	{
-		if (pipex->cmd_paths[i])
-		{
-			if (execve(pipex->cmd_paths[i], pipex->cmd_args[i], envp) == -1)
-				broken_pipe_perror(pipex, i);
-		}
-		else
-			pipex_exit(pipex, pipex->cmd_args[i][0], CMD_NOT_FOUND);
-	}
+		exec_pipex2(pipex, envp, i);
 	else
 	{
 		close(fd[0]);
@@ -94,7 +100,9 @@ void	pipex_controller(t_pipex *pipex, char **envp)
 	}
 	i = -1;
 	while (++i < pipex->cmd_count)
+	{
 		waitpid(-1, &status, 0);
-	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
-		pipex_exit(pipex, NULL, WEXITSTATUS(status));
+		if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
+			broken_pipe_exit(pipex, WEXITSTATUS(status));
+	}
 }

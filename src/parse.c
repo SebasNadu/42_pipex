@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 09:31:38 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/10/09 12:57:52 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/10/23 21:57:52 by johnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	cmd_cleaner(char *cmd)
 			continue ;
 		tmp[++j] = cmd[i];
 	}
-	if (access(tmp, F_OK))
+	if (access(tmp, F_OK) == 0)
 	{
 		ft_strlcpy(cmd, tmp, ft_strlen(tmp) + 1);
 		free(tmp);
@@ -65,8 +65,7 @@ char	*path_creator(char **cmd)
 	i = 0;
 	while (cmd[++i])
 		path = ft_strjoin(path, cmd[i]);
-	printf("path: %s\n", path);
-	if (!access(path, F_OK))
+	if (access(path, F_OK) == -1)
 	{
 		free(path);
 		return (NULL);
