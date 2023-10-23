@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 09:42:14 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/10/09 12:47:02 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/10/23 13:35:05 by sebas_nadu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ t_bool	get_infile(t_pipex *pipex, char **argv)
 		if (access(argv[1], R_OK) == -1)
 			pipex_exit(pipex, argv[1], NO_READ);
 		pipex->fd_in = open(argv[1], O_RDONLY);
+	if (pipex->fd_in < 0)
+		return (*(int *)pipex_exit(pipex, argv[1], 143));
 	}
 	return (true);
 }

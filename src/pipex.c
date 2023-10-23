@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 09:24:42 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/10/13 13:20:21 by johnavar         ###   ########.fr       */
+/*   Updated: 2023/10/23 13:29:03 by sebas_nadu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,14 @@ int	exec_pipex(t_pipex *pipex, char **envp, int i)
 	{
 		if (pipex->cmd_paths[i])
 		{
+			if (ft_strncmp(pipex->cmd_args[i][0], "exit", 4) == 0)
+				pipex_exit(pipex, NULL, ft_atoi(pipex->cmd_args[i][1]));
 			if (execve(pipex->cmd_paths[i], pipex->cmd_args[i], envp) != 0)
 				pipex_exit(pipex, pipex->cmd_args[i][0], CMD_NOT_FOUND);
-			/*execve(pipex->cmd_paths[i], pipex->cmd_args[i], envp);*/
 		}
 		else
 			pipex_exit(pipex, pipex->cmd_args[i][0], CMD_NOT_FOUND);
-		/*pipex_exit(pipex, NULL, 0);*/
+		// pipex_exit(pipex, NULL, 0);
 	}
 	else
 	{
@@ -99,9 +100,13 @@ void	pipex_controller(t_pipex *pipex, char **envp)
 	i = -1;
 	while (++i < pipex->cmd_count)
 	{
-		waitpid(-1, &status, 0);
+		// waitpid(-1, &status, 0);
+		wait(&status);
 		if (WIFEXITED(status) && WEXITSTATUS(status) != 0 && i != 0)
+		{
+			printf("exit code %d\n", WEXITSTATUS(status));
 			exit(WEXITSTATUS(status));
-			/*pipex_exit(pipex, NULL, WEXITSTATUS(status));*/
+		}
+			// pipex_exit(pipex, NULL, WEXITSTATUS(status));
 	}
 }

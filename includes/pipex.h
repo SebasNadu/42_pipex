@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:24:25 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/10/12 10:53:11 by johnavar         ###   ########.fr       */
+/*   Updated: 2023/10/23 10:59:52 by sebas_nadu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct s_pipex
 void	*pipex_exit(t_pipex *pipex, char *param, int err);
 void	pipex_perror(char *param, int err);
 void	free_array(char **array, int size);
-void	broken_pipe_perror(t_pipex *pipex, int i);
+// void	broken_pipe_perror(t_pipex *pipex, int i);
 // parse.c
 t_bool	parse_args(int argc, char **argv, t_pipex *pipex);
 t_bool	parse_cmd_paths(t_pipex *pipex, int argc, char **argv, char **envp);

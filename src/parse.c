@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 09:31:38 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/10/09 12:57:52 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/10/23 13:36:21 by sebas_nadu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ char	*path_creator(char **cmd)
 	i = 0;
 	while (cmd[++i])
 		path = ft_strjoin(path, cmd[i]);
-	printf("path: %s\n", path);
 	if (!access(path, F_OK))
 	{
 		free(path);
@@ -106,18 +105,21 @@ t_bool	parse_args(int argc, char **argv, t_pipex *pipex)
 	if (ft_strncmp(argv[1], "/dev/urandom", 12) == 0
 		&& ft_strlen(argv[1]) == 12)
 		pipex->is_urandom = true;
-	if (get_infile(pipex, argv) == false)
-		pipex_perror(argv[1], NO_FILE);
+	get_infile(pipex, argv);
+	// if (get_infile(pipex, argv) == false)
+	// 	return (*(int *)pipex_exit(pipex, argv[1], END));
+		// pipex_perror(argv[1], NO_FILE);
 	if (access(argv[argc - 1], F_OK) == -1)
-		pipex->fd_out = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC,
-				0644);
+		return (*(int *)pipex_exit(pipex, argv[argc - 1], 2));
+		// pipex->fd_out = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC,
+				// 0644);
 	else if (access(argv[argc - 1], R_OK) == -1)
 		pipex_exit(pipex, argv[argc - 1], NO_WRITE);
 	else
 		pipex->fd_out = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC,
 				0644);
-	if (pipex->fd_out < 0)
-		return (*(int *)pipex_exit(pipex, argv[argc - 1], NO_FILE));
+	// if (pipex->fd_out < 0)
+	// 	return (*(int *)pipex_exit(pipex, argv[argc - 1], NO_FILE));
 	pipex->cmd_count = argc - 3;
 	return (true);
 }

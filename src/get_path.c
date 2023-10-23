@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 10:36:30 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/10/09 11:20:29 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/10/19 15:52:29 by sebas_nadu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	**get_paths(char **envp, char *key)
 			paths = ft_split(path, ':');
 			if (!paths)
 			{
-				free(path);
+				free(paths);
 				return (NULL);
 			}
 			return (paths);
