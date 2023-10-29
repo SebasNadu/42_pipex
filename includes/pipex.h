@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:24:25 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/10/12 10:53:11 by johnavar         ###   ########.fr       */
+/*   Updated: 2023/10/23 21:10:29 by johnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ enum e_pipex_err
 	END = 0,
 	CMD_NOT_FOUND = 127,
 	NO_FILE = -2,
-	NO_AUTH = -3,
+	NO_AUTH = 126,
 	INV_ARGS = -4,
 	NO_MEMORY = -5,
 	PIPE_ERR = -6,
@@ -42,6 +42,7 @@ enum e_pipex_err
 	CMD_FAIL = -10,
 	NO_READ = -11,
 	NO_WRITE = -12,
+	NO_EXEC = -13,
 };
 
 typedef enum e_bool
@@ -67,6 +68,7 @@ void	*pipex_exit(t_pipex *pipex, char *param, int err);
 void	pipex_perror(char *param, int err);
 void	free_array(char **array, int size);
 void	broken_pipe_perror(t_pipex *pipex, int i);
+void	*broken_pipe_exit(t_pipex *pipex, int err);
 // parse.c
 t_bool	parse_args(int argc, char **argv, t_pipex *pipex);
 t_bool	parse_cmd_paths(t_pipex *pipex, int argc, char **argv, char **envp);

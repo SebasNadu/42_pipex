@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:09:49 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/09/12 11:10:11 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/10/23 21:58:00 by johnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,11 @@ t_bool	parse_cmd_paths(t_pipex *pipex, int argc, char **argv, char **envp)
 	i = 1 + pipex->here_doc;
 	while (++i < argc - 1)
 	{
+		if (access(argv[i], F_OK) == 0)
+		{
+			pipex->cmd_paths[i - 2] = ft_strdup(argv[i]);
+			continue ;
+		}
 		cmd = split_with_quotes(argv[i], ' ');
 		if (!cmd)
 			return (false);
@@ -64,9 +69,11 @@ t_bool	parse_args(int argc, char **argv, t_pipex *pipex)
 	if (argc < 5 + (int)pipex->here_doc)
 		return (*(int *)pipex_exit(pipex, NULL, INV_ARGS));
 	if (get_infile(pipex, argv) == false)
-		return (*(int *)pipex_exit(pipex, argv[1], NO_FILE));
+		pipex_perror(argv[1], NO_FILE);
 	if (get_outfile(pipex, argv, argc) == false)
 		return (*(int *)pipex_exit(pipex, argv[argc - 1], NO_FILE));
+	else if (access(argv[argc - 1], R_OK) == -1)
+		pipex_exit(pipex, argv[argc - 1], NO_WRITE);
 	pipex->cmd_count = argc - 3 - (int)pipex->here_doc;
 	return (true);
 }

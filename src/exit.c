@@ -6,7 +6,11 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 11:13:39 by sebasnadu         #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/10/14 01:11:23 by sebasnadu        ###   ########.fr       */
+=======
+/*   Updated: 2023/10/23 20:48:26 by johnavar         ###   ########.fr       */
+>>>>>>> 005e6c8195c774376bfe7546bbf0183386a0e0e2
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +66,27 @@ void	*pipex_exit(t_pipex *pipex, char *param, int err)
 		unlink(URANDOM_PATH);
 	free(pipex);
 	exit(err);
-	/*if (err > 1)*/
-		/*exit(127);*/
-	/*else if (err < 0)*/
-		/*exit(2);*/
-	/*else*/
-		/*exit(err);*/
+	return (0);
+}
+
+void	*broken_pipe_exit(t_pipex *pipex, int err)
+{
+	if (pipex->fd_in != -2)
+		close(pipex->fd_in);
+	if (pipex->fd_out != -2)
+		close(pipex->fd_out);
+	if (pipex->cmd_paths != NULL)
+		free_array(pipex->cmd_paths, pipex->cmd_count);
+	if (pipex->cmd_args != NULL)
+		free_matrix(pipex->cmd_args, pipex->cmd_count);
+	if (pipex->is_in_cpy)
+		unlink(NO_INFILE);
+	if (pipex->here_doc)
+		unlink(HERE_DOC_PATH);
+	if (pipex->is_urandom)
+		unlink(URANDOM_PATH);
+	free(pipex);
+	exit(err);
 	return (0);
 }
 
