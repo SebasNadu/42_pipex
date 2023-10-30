@@ -1,0 +1,15 @@
+==57030== Memcheck, a memory error detector
+==57030== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==57030== Using Valgrind-3.21.0 and LibVEX; rerun with -h for copyright info
+==57030== Command: ./pipex infile grep\ d cat\ -e output/valgrind
+==57030== Parent PID: 56750
+==57030== 
+==57030== 
+==57030== HEAP SUMMARY:
+==57030==     in use at exit: 0 bytes in 0 blocks
+==57030==   total heap usage: 173 allocs, 173 frees, 3,989 bytes allocated
+==57030== 
+==57030== All heap blocks were freed -- no leaks are possible
+==57030== 
+==57030== For lists of detected and suppressed errors, rerun with: -s
+==57030== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

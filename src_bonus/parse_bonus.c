@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:09:49 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/10/23 21:58:00 by johnavar         ###   ########.fr       */
+/*   Updated: 2023/10/30 11:05:22 by sebas_nadu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_bool	parse_cmd_paths(t_pipex *pipex, int argc, char **argv, char **envp)
 	i = 1 + pipex->here_doc;
 	while (++i < argc - 1)
 	{
-		if (access(argv[i], F_OK) == 0)
+		if (access(argv[i], X_OK) == 0)
 		{
 			pipex->cmd_paths[i - 2] = ft_strdup(argv[i]);
 			continue ;

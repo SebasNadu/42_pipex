@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 09:42:14 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/10/29 21:42:18 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/10/30 10:15:26 by sebas_nadu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static t_bool	urandom_handler(void)
 	char	*buffer;
 	int		urandom_fd;
 	int		tmp_fd;
+	int		i;
 
 	urandom_fd = open("/dev/urandom", O_RDONLY);
 	if (urandom_fd == -1)
@@ -44,10 +45,14 @@ static t_bool	urandom_handler(void)
 	tmp_fd = open(URANDOM_PATH, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (tmp_fd == -1)
 		return (false);
-	if (read_line(&buffer, urandom_fd, '\n') == -1)
-		return (false);
-	write(tmp_fd, buffer, ft_strlen(buffer));
-	free(buffer);
+	i = -1;
+	while (++i < 20)
+	{
+		if (read_line(&buffer, urandom_fd, '\n') == -1)
+			return (false);
+		write(tmp_fd, buffer, ft_strlen(buffer));
+		free(buffer);
+	}
 	close(tmp_fd);
 	close(urandom_fd);
 	return (true);

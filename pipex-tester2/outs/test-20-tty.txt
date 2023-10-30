@@ -1,0 +1,14 @@
+==60010== Memcheck, a memory error detector
+==60010== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==60010== Using Valgrind-3.21.0 and LibVEX; rerun with -h for copyright info
+==60010== Command: ../../42_pipex/pipex assets/deepthought.txt grep\ Now wc\ -w outs/test-20.txt
+==60010== 
+==60010== 
+==60010== HEAP SUMMARY:
+==60010==     in use at exit: 0 bytes in 0 blocks
+==60010==   total heap usage: 177 allocs, 177 frees, 3,982 bytes allocated
+==60010== 
+==60010== All heap blocks were freed -- no leaks are possible
+==60010== 
+==60010== For lists of detected and suppressed errors, rerun with: -s
+==60010== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

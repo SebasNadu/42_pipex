@@ -6,7 +6,7 @@
 #    By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/25 11:34:58 by sebasnadu         #+#    #+#              #
-#    Updated: 2023/10/12 10:42:29 by johnavar         ###   ########.fr        #
+#    Updated: 2023/10/30 11:25:37 by sebas_nadu       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,7 @@ SRCB_PCT = $(shell expr 100 \* $(SRCB_COUNT) / $(SRCB_COUNT_TOT))
 # **************************************************************************** #
 
 all: $(NAME)
+allb: bonus
 
 $(NAME): $(LIBFT) $(OBJ)
 	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT_FLAGS) -o $(NAME)

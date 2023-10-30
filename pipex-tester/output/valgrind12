@@ -1,0 +1,15 @@
+==57056== Memcheck, a memory error detector
+==57056== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==57056== Using Valgrind-3.21.0 and LibVEX; rerun with -h for copyright info
+==57056== Command: ./pipex /dev/urandom head\ -n\ 10 wc\ -l output/valgrind
+==57056== Parent PID: 56750
+==57056== 
+==57056== 
+==57056== HEAP SUMMARY:
+==57056==     in use at exit: 0 bytes in 0 blocks
+==57056==   total heap usage: 203 allocs, 203 frees, 204,006 bytes allocated
+==57056== 
+==57056== All heap blocks were freed -- no leaks are possible
+==57056== 
+==57056== For lists of detected and suppressed errors, rerun with: -s
+==57056== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

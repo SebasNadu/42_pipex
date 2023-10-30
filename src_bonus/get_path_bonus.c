@@ -29,10 +29,7 @@ static char	**get_paths(char **envp, char *key)
 			path++;
 			paths = ft_split(path, ':');
 			if (!paths)
-			{
-				free(path);
 				return (NULL);
-			}
 			return (paths);
 		}
 	}

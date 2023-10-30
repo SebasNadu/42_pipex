@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 09:31:38 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/10/29 21:42:18 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2023/10/30 11:03:38 by sebas_nadu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ t_bool	parse_cmd_paths(t_pipex *pipex, int argc, char **argv, char **envp)
 	i = 1;
 	while (++i < argc -1)
 	{
-		if (access(argv[i], F_OK) == 0)
+		if (access(argv[i], X_OK) == 0)
 		{
 			pipex->cmd_paths[i - 2] = ft_strdup(argv[i]);
 			continue ;
@@ -107,8 +107,7 @@ t_bool	parse_args(int argc, char **argv, t_pipex *pipex)
 		pipex->is_urandom = true;
 	if (get_infile(pipex, argv) == false)
 		pipex_perror(argv[1], NO_FILE);
-	if (access(argv[argc - 1], F_OK) == -1
-		|| access(argv[argc - 1], W_OK) == -1)
+	if (access(argv[argc - 1], F_OK) == 0)
 	{
 		if (access(argv[argc - 1], W_OK) == -1)
 			pipex_perror(argv[argc - 1], NO_WRITE);

@@ -1,12 +1,11 @@
-total 144
-drwXr-Xr-X@ 11 s basnadu  staff    352 Oct 29 22:22 .
-drwXr-Xr-X@ 13 s basnadu  staff    416 Oct 29 22:22 ..
-drwXr-Xr-X@ 12 s basnadu  staff    384 Oct 29 22:16 .g t
--rw-r--r--@  1 s basnadu  staff    160 Oct 29 22:16 Mak f l 
--rw-r--r--@  1 s basnadu  staff    176 Oct 29 22:16 README.md
--rw-r--r--@  1 s basnadu  staff    108 Oct 29 22:16 fn_allow d
--rw-r--r--@  1 s basnadu  staff     83 Oct 29 22:21 fn_us d
--rwXrwXrwX@  1 s basnadu  staff      0 Oct 29 22:22  nf l 
-drwXr-Xr-X@  2 s basnadu  staff     64 Oct 29 22:22 outPut
--rwXr-Xr-X@  1 s basnadu  staff  36120 Oct 29 22:22 P P X
--rwXr-Xr-X@  1 s basnadu  staff  18826 Oct 29 22:16 t st.sh
+total 76
+drwXrwXr-X  3 s bas_nadu s bas_nadu  4096 Oct 30 10:12 .
+drwXrwXr-X 14 s bas_nadu s bas_nadu  4096 Oct 30 10:12 ..
+-rw-rw-r--  1 s bas_nadu s bas_nadu   108 Oct 30 08:35 fn_allow d
+-rw-rw-r--  1 s bas_nadu s bas_nadu    12 Oct 30 10:11 fn_us d
+-rwXrwXrwX  1 s bas_nadu s bas_nadu     0 Oct 30 10:12  nf l 
+-rw-rw-r--  1 s bas_nadu s bas_nadu   160 Oct 30 08:35 Mak f l 
+drwXrwXr-X  2 s bas_nadu s bas_nadu  4096 Oct 30 10:12 outPut
+-rwXrwXr-X  1 s bas_nadu s bas_nadu 27248 Oct 30 10:12 P P X
+-rw-rw-r--  1 s bas_nadu s bas_nadu   176 Oct 30 08:35 README.md
+-rwXrwXr-X  1 s bas_nadu s bas_nadu 18826 Oct 30 08:35 t st.sh

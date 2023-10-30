@@ -1,1 +1,3 @@
-                                                                                                    [ 1/8 (12%) ] Compiling [0;94msrc/pipex.c[0;39m...                                                                                                    [0;92mpipex is up to date![0;39m
+make: Entering directory '/home/sebas_nadu/code/SebasNadu/42_pipex'
+make: Nothing to be done for 'all'.
+make: Leaving directory '/home/sebas_nadu/code/SebasNadu/42_pipex'

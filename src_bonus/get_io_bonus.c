@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_io_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
+/*   By: sebas_nadu <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/05 16:16:03 by sebasnadu         #+#    #+#             */
-/*   Updated: 2023/10/23 22:02:46 by johnavar         ###   ########.fr       */
+/*   Created: 2023/10/30 10:04:17 by sebas_nadu        #+#    #+#             */
+/*   Updated: 2023/10/30 11:24:57 by sebas_nadu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,18 @@ t_bool	get_outfile(t_pipex *pipex, char **argv, int argc)
 		pipex->fd_out = open(argv[argc - 1], O_WRONLY | O_CREAT
 				| O_APPEND, 0644);
 	else
-		pipex->fd_out = open(argv[argc - 1], O_WRONLY | O_CREAT
-				| O_TRUNC, 0644);
+	{
+		if (access(argv[argc - 1], F_OK) == 0)
+		{
+			if (access(argv[argc - 1], W_OK) == -1)
+				pipex_perror(argv[argc - 1], NO_WRITE);
+			pipex->fd_out = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC,
+					0644);
+		}
+		else
+			pipex->fd_out = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC,
+					0644);
+	}
 	if (pipex->fd_out < 0)
 		return (false);
 	return (true);
@@ -72,6 +82,7 @@ static t_bool	urandom_handler(void)
 	int		urandom_fd;
 	int		tmp_fd;
 	char	*buffer;
+	int		i;
 
 	urandom_fd = open("/dev/urandom", O_RDONLY);
 	if (urandom_fd < 0)
@@ -79,10 +90,14 @@ static t_bool	urandom_handler(void)
 	tmp_fd = open(URANDOM_PATH, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (tmp_fd < 0)
 		return (false);
-	if (read_line(&buffer, urandom_fd, '\0') == -1)
-		return (false);
-	write(tmp_fd, buffer, ft_strlen(buffer));
-	free(buffer);
+	i = -1;
+	while (++i < 20)
+	{
+		if (read_line(&buffer, urandom_fd, '\n') == -1)
+			return (false);
+		write(tmp_fd, buffer, ft_strlen(buffer));
+		free(buffer);
+	}
 	close(tmp_fd);
 	close(urandom_fd);
 	return (true);
